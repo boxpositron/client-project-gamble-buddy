@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-teal-800"></div>
+  <div class="min-h-screen bg-black"></div>
 </template>
 
 <script lang="ts" setup>
