@@ -1,10 +1,18 @@
 <template>
-  <div class="blackjack-game flex min-h-screen flex-col" ref="blackjack"></div>
+  <div
+    class="blackjack-game flex min-h-screen flex-col border-2 border-t-0 border-yellow-500 bg-black"
+    ref="blackjack"
+  ></div>
 </template>
 
 <script lang="ts" setup>
-import { Application, Sprite } from "pixi.js";
-import { getDeck, SupportedDecks } from "~/data/deck";
+import { Application, Sprite, Container } from "pixi.js";
+import {
+  getDeck,
+  type SupportedDeck,
+  SupportedDecks,
+  type Card,
+} from "~/data/deck";
 
 useHead({
   title: "Blackjack | Gamble Buddy",
@@ -18,12 +26,37 @@ useHead({
 
 const blackjack = ref<HTMLDivElement | null>(null);
 
-async function setupDecks(app: Application) {
-  const deck = getDeck(SupportedDecks.black);
+type EnhancedCard = Card & {
+  sprite: Sprite;
+};
 
-  for (let card of deck.cards) {
-    const sprite = Sprite.from(card.path);
-    app.stage.addChild(sprite);
+const PlayerTypes = {
+  dealer: "dealer",
+  player: "player",
+  opponent: "opponent",
+} as const;
+
+type PlayerType = (typeof PlayerTypes)[keyof typeof PlayerTypes];
+
+function setupPlayer(type: PlayerType) {
+  const playerContainer = new Container();
+
+  playerContainer.width = 100;
+  playerContainer.height = 100;
+
+  switch (type) {
+    case PlayerTypes.dealer: {
+      playerContainer.x = 0;
+      playerContainer.y = 0;
+
+      break;
+    }
+    case PlayerTypes.player: {
+      break;
+    }
+    case PlayerTypes.opponent: {
+      break;
+    }
   }
 }
 
@@ -38,13 +71,31 @@ function setupStage() {
   const app = new Application({
     width: currentPageWidth,
     height: currentPageHeight,
-    backgroundColor: 0x1099bb,
+    backgroundAlpha: 0,
     resolution: window.devicePixelRatio || 1,
   });
 
   blackjack.value?.appendChild(app.view as unknown as Node);
 
-  setupDecks(app);
+  setupPlayer(PlayerTypes.dealer);
+  setupPlayer(PlayerTypes.player);
+  setupPlayer(PlayerTypes.opponent);
+}
+
+function fetchDeckSprites(type: SupportedDeck): EnhancedCard[] {
+  const deck = getDeck(type);
+
+  const deckSprites: EnhancedCard[] = [];
+
+  for (let card of deck.cards) {
+    const sprite = Sprite.from(card.path);
+    deckSprites.push({
+      ...card,
+      sprite,
+    });
+  }
+
+  return deckSprites;
 }
 
 onMounted(() => {
