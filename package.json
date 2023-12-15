@@ -26,6 +26,7 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "pinia": "^2.1.7",
+    "pixi.js": "^7.3.2",
     "tailwind-merge": "^2.1.0"
   }
 }
