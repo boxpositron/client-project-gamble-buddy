@@ -1,8 +1,5 @@
 <template>
-  <AppHeader />
-  <div class="mt-20 min-h-screen">
-    <slot />
-  </div>
+  <slot />
 </template>
 
 <script lang="ts" setup></script>
