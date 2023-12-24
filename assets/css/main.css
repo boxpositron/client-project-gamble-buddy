@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  font-family: "Lato", sans-serif;
+  height: 100%;
+  font-size: 16px;
+  color: theme(colors.white);
+  background-color: theme(colors.gray.900);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $primary-dark;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: theme(colors.green.900);
+  transition: background-color 200ms ease-out;
+
+  border-radius: 5px;
+  -webkit-app-region: no-drag;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: theme(colors.green.900);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition: background-color 200ms ease-in;
+  background-color: theme(colors.green.900);
+}
