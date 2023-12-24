@@ -1,5 +1,16 @@
 <template>
-  <div class="min-h-screen bg-black"></div>
+  <div
+    class="game-menu flex min-h-screen flex-col items-center justify-center bg-cover bg-center"
+  >
+    <div class="flex flex-col gap-2">
+      <nuxt-link
+        to="/blackjack"
+        class="text-xl font-bold text-white transition-all duration-300 ease-in-out hover:text-yellow-500"
+      >
+        Blackjack
+      </nuxt-link>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -14,4 +25,4 @@ useHead({
 });
 </script>
 
-<style></style>
+<style scoped lang="scss"></style>
