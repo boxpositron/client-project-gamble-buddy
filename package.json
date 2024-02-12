@@ -17,6 +17,7 @@
     "nuxt": "^3.8.2",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "sass": "^1.69.5",
+    "typescript": "^5.3.3",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
   },
@@ -27,7 +28,9 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "@pixi/core": "^7.3.2",
+    "@pixi/loaders": "^6.5.10",
     "@pixi/sound": "^5.2.2",
+    "@vueuse/core": "^10.7.1",
     "gsap": "^3.12.4",
     "pinia": "^2.1.7",
     "pixi.js": "^7.3.2",
