@@ -1,11 +1,9 @@
 <template>
-  <div
-    class="game-menu flex min-h-screen flex-col items-center justify-center bg-cover bg-center"
-  >
-    <div class="flex flex-col gap-2">
+  <div class="px-5 py-5 lg:px-20 lg:py-20">
+    <div class="flex w-full flex-col gap-2">
       <nuxt-link
         to="/blackjack"
-        class="text-xl font-bold text-white transition-all duration-300 ease-in-out hover:text-yellow-500"
+        class="relative text-center text-xl font-bold text-white transition-all duration-300 ease-in-out before:absolute before:left-0 before:top-1/2 before:h-1 before:w-full before:bg-white/10 hover:text-yellow-500"
       >
         Blackjack
       </nuxt-link>
