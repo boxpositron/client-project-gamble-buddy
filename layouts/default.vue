@@ -1,6 +1,6 @@
 <template>
-  <AppHeader />
-  <div class="mt-20 min-h-screen">
+  <div class="min-h-screen">
+    <AppHeader />
     <slot />
   </div>
 </template>
