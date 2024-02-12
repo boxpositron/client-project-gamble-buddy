@@ -1,6 +1,7 @@
-import { unref } from "#imports"
-import { Sound } from '@pixi/sound';
+import { unref } from "#imports";
+import { onKeyStroke } from "@vueuse/core";
 import gsap, { Power1 } from "gsap";
+import { Sound, sound } from '@pixi/sound';
 import { Sprite, Container, Texture, Graphics, Text } from "pixi.js";
 
 
@@ -80,7 +81,7 @@ export function setupGame() {
         app.stage.addChild(dispenser);
 
 
-        const cards = loadDeckSprites(SupportedDecks.WHITE);
+        const cards = await loadDeckSprites(SupportedDecks.WHITE);
         const shuffled = shuffleDeck(cards);
 
 
@@ -108,13 +109,44 @@ export function setupGame() {
         app.stage.eventMode = 'dynamic';
 
         // Deal initial cards
+        function checkIfBust(playerType: PlayerType, score: number = 0): boolean {
+
+            if (score > 21) {
+                console.log("Bust")
+                return true;
+            }
+
+            return false;
+        }
+
+        function dealAndScore() {
+            const { score: playerScore } = dealPlayer();
+            const { score: houseScore } = dealHouse({ hide: true });
+            const isPlayerBust = checkIfBust(PlayerTypes.player, playerScore);
+            const isDealerBust = checkIfBust(PlayerTypes.dealer, houseScore);
+            
+            // We have to implement some logic here to determine if the player or dealer has won
+            // If the player has won, we should play a sound and show a message
+            // If the dealer has won, we should play a sound and show a message
+            // If the player and dealer have tied, we should play a sound and show a message
+            // If the player has busted, we should play a sound and show a message
+            // If the dealer has busted, we should play a sound and show a message
+            // If the player has blackjack, we should play a sound and show a message
+            // If the dealer has blackjack, we should play a sound and show a message
+            // If the player has blackjack and the dealer has blackjack, we should play a sound and show a message
+            
+
+        }
+
+        onKeyStroke(" ", dealAndScore);
+
+
+        // Deal initial cards
         dealHouse();
-        await sleep(500);
         dealPlayer();
-        await sleep(500);
-        dealHouse({ hide: true });
-        await sleep(500);
-        dealPlayer();
+
+        // Deal New Cards;
+        dealAndScore();
 
     }
 
@@ -349,7 +381,8 @@ export function setupGame() {
 
 
             return {
-                flipCard
+                flipCard,
+                score: getTotalValue()
             }
 
 
@@ -369,7 +402,7 @@ export function setupGame() {
     };
 
 
-    function loadDeckSprites(type: SupportedDeck): CardSprites {
+    async function loadDeckSprites(type: SupportedDeck): Promise<CardSprites> {
 
 
         if (Object.keys(CardSprites[type]).length > 0) {
@@ -379,6 +412,10 @@ export function setupGame() {
         const deck = getDeck(type);
 
         const deckSprites: CardSprites = {};
+
+        // const { Loader } = await import("@pixi/loaders")
+
+        // const loader = new Loader();
 
 
         for (const card of deck.cards) {
@@ -464,7 +501,7 @@ async function useSoundLoader() {
         const soundItem = Sound.from({
             url: soundPath,
             preload: true,
-            loaded: function (err) {
+            loaded: function(err) {
                 const soundObject = sound.add(gameSound, soundItem);
                 resolve(soundObject);
             }
