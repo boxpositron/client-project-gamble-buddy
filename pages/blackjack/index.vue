@@ -1,30 +1,33 @@
 <template>
-  <div ref="blackjack"></div>
+    <div ref="blackjack"></div>
 </template>
 
 <script lang="ts" setup>
-import { setupGame } from "~/pages/blackjack/game";
 
 useHead({
-  title: "Blackjack | Gamble Buddy",
-  meta: [
-    {
-      name: "description",
-      content: "Basic blackjack game.",
-    },
-  ],
+    title: "Blackjack | Gamble Buddy",
+    meta: [
+        {
+            name: "description",
+            content: "Basic blackjack game.",
+        },
+    ],
 });
 
 definePageMeta({
-  layout: "game",
+    layout: "game",
 });
 
 const blackjack = ref<HTMLDivElement | null>(null);
 
-onMounted(() => {
-  const { setupStage } = setupGame();
-  setupStage(blackjack);
-});
+
+// Only load on client
+if (process.client) {
+    const { setupStage } = await import("~/games/blackjack/game");
+    setupStage(blackjack);
+
+}
+
 </script>
 
 <style scoped></style>
